@@ -68,8 +68,12 @@ func addData(c echo.Context) error {
 	}
 	dataString := fmt.Sprintf("%v", data)
 
-	encryptedString := eEncrypt(dataString, keyString)
-	cid := AddFileToIPFS(encryptedString)
+	encryptedString, err := Encrypt(dataString, keyString)
+	if err != nil {
+		log.Fatalf("Failed encrypting the data%s\n", err)
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error)
+	}
+	cid := AddFileToIPFS(string(encryptedString))
 
 	log.Printf("Added data", cid)
 	return c.String(http.StatusOK, fmt.Sprintf("Data added: %v", data))

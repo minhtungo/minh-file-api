@@ -11,7 +11,7 @@ import (
 )
 
 func Decrypt(encryptedString string, passphrase string) ([]byte, error) {
-	key := []byte(createHash(passphrase))
+	key := []byte(CreateHash(passphrase))
 	ciphertext, err := hex.DecodeString(encryptedString)
 	if err != nil {
 		return nil, err
@@ -45,7 +45,7 @@ func Decrypt(encryptedString string, passphrase string) ([]byte, error) {
 func Encrypt(stringToEncrypt string, passphrase string) ([]byte, error) {
 
 	//Convert decode the key to bytes
-	key := []byte(createHash(passphrase))
+	key := []byte(CreateHash(passphrase))
 	plaintext := []byte(stringToEncrypt)
 
 	//Create a new Cipher Block from the key
