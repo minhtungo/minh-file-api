@@ -14,35 +14,14 @@ import (
 	"log"
 )
 
-var keyString string
+var keyString []byte = []byte("the-key-has-to-be-32-bytes-long!")
 
 type Data struct {
 	content string `json:"content"`
 }
 
-// func main() {
-// 	// create a new echo instance
-// 	e := echo.New()
-
-// 	// Routes
-// 	e.GET("/", hello)
-// 	e.GET("/add/:cid", getData)
-
-// 	e.POST("/add", addData)
-
-// 	// generate a random 32 byte key for AES-256
-// 	bytes := make([]byte, 32)
-// 	if _, err := rand.Read(bytes); err != nil {
-// 		panic(err.Error())
-// 	}
-// 	keyString = hex.EncodeToString(bytes) //encode key in bytes to string and keep as secret, put in a vault
-
-// 	// Start server
-// 	e.Logger.Fatal(e.Start(":8000"))
-// }
-
-func getData(c echo.Context) error {
-	cid := c.Param("cid")
+func GetData(c echo.Context) error {
+	cid := c.QueryParam("cid")
 	outdir := fmt.Sprintf("%v", cid)
 	GetFileFromIPFS(cid, outdir)
 	data, err := ioutil.ReadFile(outdir)
@@ -50,15 +29,20 @@ func getData(c echo.Context) error {
 		panic(err.Error())
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error)
 	}
-	return c.String(http.StatusOK, fmt.Sprintf("Data: %v", data))
+	return c.JSON(http.StatusOK, map[string]string {
+		"data": string (data),
+		"cid" : cid,
+	})
 }
 
 // Handlers
-func hello(c echo.Context) error {
-	return c.String(http.StatusOK, "Hello, Taubyte!")
+func Hello(c echo.Context) error {
+	return c.JSON(http.StatusOK, map[string]string {
+		"message": "Hello",
+	})
 }
 
-func addData(c echo.Context) error {
+func AddData(c echo.Context) error {
 	data := Data{}
 	defer c.Request().Body.Close()
 	err := json.NewDecoder(c.Request().Body).Decode(&data)
@@ -76,5 +60,7 @@ func addData(c echo.Context) error {
 	cid := AddFileToIPFS(string(encryptedString))
 
 	log.Printf("Added data", cid)
-	return c.String(http.StatusOK, fmt.Sprintf("Data added: %v", data))
+	return c.JSON(http.StatusOK, map[string]string {
+		"cid" : cid,
+	})
 }

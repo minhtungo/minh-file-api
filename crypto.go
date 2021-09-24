@@ -4,14 +4,12 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
-	"crypto/md5"
 	"encoding/hex"
 	"io"
 	"errors"
 )
 
-func Decrypt(encryptedString string, passphrase string) ([]byte, error) {
-	key := []byte(CreateHash(passphrase))
+func Decrypt(encryptedString string, key []byte) ([]byte, error) {
 	ciphertext, err := hex.DecodeString(encryptedString)
 	if err != nil {
 		return nil, err
@@ -42,10 +40,7 @@ func Decrypt(encryptedString string, passphrase string) ([]byte, error) {
 	return aesGCM.Open(nil, nonce, ciphertext, nil)
 }
 
-func Encrypt(stringToEncrypt string, passphrase string) ([]byte, error) {
-
-	//Convert decode the key to bytes
-	key := []byte(CreateHash(passphrase))
+func Encrypt(stringToEncrypt string, key []byte) ([]byte, error) {
 	plaintext := []byte(stringToEncrypt)
 
 	//Create a new Cipher Block from the key
@@ -54,8 +49,7 @@ func Encrypt(stringToEncrypt string, passphrase string) ([]byte, error) {
 		return nil, err
 	}
 
-	//Create a new GCM - https://en.wikipedia.org/wiki/Galois/Counter_Mode
-	//https://golang.org/pkg/crypto/cipher/#NewGCM
+	//Create a new GCM 
 	aesGCM, err := cipher.NewGCM(block)
 	if err != nil {
 		return nil, err
@@ -71,8 +65,4 @@ func Encrypt(stringToEncrypt string, passphrase string) ([]byte, error) {
 	return aesGCM.Seal(nonce, nonce, plaintext, nil), nil
 }
 
-func CreateHash(key string) string {
-	hasher := md5.New()
-	hasher.Write([]byte(key))
-	return hex.EncodeToString(hasher.Sum(nil))
-}
+
