@@ -1,4 +1,4 @@
-package minh
+package cryp
 
 import (
 	"fmt"

@@ -3,13 +3,16 @@ module github.com/minhtungo/minh-file-api
 go 1.17
 
 require (
+	github.com/ipfs/go-ipfs-api v0.2.0
+	github.com/labstack/echo/v4 v4.6.0
+)
+
+require (
 	github.com/btcsuite/btcd v0.20.1-beta // indirect
 	github.com/crackcomm/go-gitignore v0.0.0-20170627025303-887ab5e44cc3 // indirect
 	github.com/gogo/protobuf v1.3.1 // indirect
 	github.com/ipfs/go-cid v0.0.7 // indirect
-	github.com/ipfs/go-ipfs-api v0.2.0 // indirect
 	github.com/ipfs/go-ipfs-files v0.0.8 // indirect
-	github.com/labstack/echo/v4 v4.6.0 // indirect
 	github.com/labstack/gommon v0.3.0 // indirect
 	github.com/libp2p/go-buffer-pool v0.0.2 // indirect
 	github.com/libp2p/go-flow-metrics v0.0.3 // indirect

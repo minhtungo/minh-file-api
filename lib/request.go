@@ -1,4 +1,4 @@
-package minh
+package cryp
 
 import (
 	"fmt"
@@ -12,9 +12,6 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"log"
-
-	"crypto/rand"
-	"encoding/hex"
 )
 
 var keyString string
