@@ -1,4 +1,4 @@
-package main
+package minh
 
 import (
 	"fmt"
@@ -15,9 +15,6 @@ import (
 
 	"crypto/rand"
 	"encoding/hex"
-
-	encryption "github.com/minhtungo/minh-file-api/encryption"
-	ipfs "github.com/minhtungo/minh-file-api/ipfs-api"
 )
 
 var keyString string
@@ -26,32 +23,31 @@ type Data struct {
 	content string `json:"content"`
 }
 
-func main() {
-	// create a new echo instance
-	e := echo.New()
+// func main() {
+// 	// create a new echo instance
+// 	e := echo.New()
 
-	// Routes
-	e.GET("/", hello)
-	e.GET("/add/:cid", getData)
+// 	// Routes
+// 	e.GET("/", hello)
+// 	e.GET("/add/:cid", getData)
 
-	e.POST("/add", addData)
+// 	e.POST("/add", addData)
 
-	// generate a random 32 byte key for AES-256
-	bytes := make([]byte, 32)
-	if _, err := rand.Read(bytes); err != nil {
-		panic(err.Error())
-	}
-	keyString = hex.EncodeToString(bytes) //encode key in bytes to string and keep as secret, put in a vault
+// 	// generate a random 32 byte key for AES-256
+// 	bytes := make([]byte, 32)
+// 	if _, err := rand.Read(bytes); err != nil {
+// 		panic(err.Error())
+// 	}
+// 	keyString = hex.EncodeToString(bytes) //encode key in bytes to string and keep as secret, put in a vault
 
-	// Start server
-	e.Logger.Fatal(e.Start(":8000"))
-
-}
+// 	// Start server
+// 	e.Logger.Fatal(e.Start(":8000"))
+// }
 
 func getData(c echo.Context) error {
 	cid := c.Param("cid")
 	outdir := fmt.Sprintf("%v", cid)
-	ipfs.GetFileFromIPFS(cid, outdir)
+	GetFileFromIPFS(cid, outdir)
 	data, err := ioutil.ReadFile(outdir)
 	if err != nil {
 		panic(err.Error())
@@ -75,8 +71,8 @@ func addData(c echo.Context) error {
 	}
 	dataString := fmt.Sprintf("%v", data)
 
-	encryptedString := encryption.Encrypt(dataString, keyString)
-	cid := ipfs.AddFileToIPFS(encryptedString)
+	encryptedString := eEncrypt(dataString, keyString)
+	cid := AddFileToIPFS(encryptedString)
 
 	log.Printf("Added data", cid)
 	return c.String(http.StatusOK, fmt.Sprintf("Data added: %v", data))
