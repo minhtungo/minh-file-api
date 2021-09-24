@@ -1,6 +1,6 @@
 package main
 
-import "github.com/minhtungo/minh-file-api/functions"
+import "github.com/minhtungo/minh-file-api/lib"
 
 func main() {
 	println("hello")
