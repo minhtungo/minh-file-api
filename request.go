@@ -17,8 +17,10 @@ import (
 var keyString []byte = []byte("the-key-has-to-be-32-bytes-long!")
 
 type Data struct {
-	content string `json:"content"`
+	Content string `json:"content"`
 }
+
+type H map[string]interface{}
 
 func GetData(c echo.Context) error {
 	cid := c.QueryParam("cid")
@@ -29,30 +31,28 @@ func GetData(c echo.Context) error {
 		panic(err.Error())
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error)
 	}
-	return c.JSON(http.StatusOK, map[string]string {
-		"data": string (data),
+	return c.JSON(http.StatusOK, H{
 		"cid" : cid,
 	})
 }
 
 // Handlers
 func Hello(c echo.Context) error {
-	return c.JSON(http.StatusOK, map[string]string {
+	return c.JSON(http.StatusOK, H{
 		"message": "Hello",
 	})
 }
 
 func AddData(c echo.Context) error {
-	data := Data{}
+	var data Data
 	defer c.Request().Body.Close()
 	err := json.NewDecoder(c.Request().Body).Decode(&data)
 	if err != nil {
 		log.Fatalf("Failed reading the request body %s\n", err)
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error)
 	}
-	dataString := fmt.Sprintf("%v", data)
 
-	encryptedString, err := Encrypt(dataString, keyString)
+	encryptedString, err := Encrypt(data.Content, keyString)
 	if err != nil {
 		log.Fatalf("Failed encrypting the data%s\n", err)
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error)
@@ -60,7 +60,7 @@ func AddData(c echo.Context) error {
 	cid := AddFileToIPFS(string(encryptedString))
 
 	log.Printf("Added data", cid)
-	return c.JSON(http.StatusOK, map[string]string {
+	return c.JSON(http.StatusOK, H{
 		"cid" : cid,
 	})
 }

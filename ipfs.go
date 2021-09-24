@@ -9,9 +9,10 @@ import (
 )
 
 var sh *shell.Shell
+var url string = "localhost:8080"
 
 func init() {
-	sh = shell.NewShell("localhost:8000")
+	sh = shell.NewShell(url)
 }
 
 func AddFileToIPFS(content string) string {
