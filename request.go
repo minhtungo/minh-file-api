@@ -39,7 +39,7 @@ func GetData(c echo.Context) error {
 
 func Hello(c echo.Context) error {
 	return c.JSON(http.StatusOK, H{
-		"message": "Hello",
+		"message": "Hellooo",
 	})
 }
 
