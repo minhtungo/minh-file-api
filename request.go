@@ -22,21 +22,21 @@ type Data struct {
 
 type H map[string]interface{}
 
+// Handlers
 func GetData(c echo.Context) error {
 	cid := c.QueryParam("cid")
-	outdir := fmt.Sprintf("%v", cid)
-	GetFileFromIPFS(cid, outdir)
-	data, err := ioutil.ReadFile(outdir)
-	if err != nil {
-		panic(err.Error())
-		return echo.NewHTTPError(http.StatusInternalServerError, err.Error)
-	}
+	// outdir := fmt.Sprintf("%v", cid)
+	// GetFileFromIPFS(cid, outdir)
+	// data, err := ioutil.ReadFile(outdir)
+	// if err != nil {
+	// 	panic(err.Error())
+	// 	return echo.NewHTTPError(http.StatusInternalServerError, err.Error)
+	// }
 	return c.JSON(http.StatusOK, H{
 		"cid" : cid,
 	})
 }
 
-// Handlers
 func Hello(c echo.Context) error {
 	return c.JSON(http.StatusOK, H{
 		"message": "Hello",
