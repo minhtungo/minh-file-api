@@ -33,7 +33,7 @@ func GetData(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, H{
 		"cid": cid,
-		"data": data,
+		"data": string(data),
 	})
 }
 
