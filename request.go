@@ -15,7 +15,7 @@ import (
 var keyString []byte = []byte("the-key-has-to-be-32-bytes-long!")
 
 type Data struct {
-	Content string `json:"content"`
+	Content string `json:"content" query:"content" form:"content"`
 }
 
 type H map[string]interface{}
