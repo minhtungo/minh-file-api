@@ -50,7 +50,7 @@ func AddData(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error)
 	}
 	content := fmt.Sprintf("%v", data["content"])
-	fmt.Printf(content)
+	log.Fatalf(content)
 	encryptedString, err := Encrypt(content.Content, keyString)
 	if err != nil {
 		log.Fatalf("Failed encrypting the data%s\n", err)
