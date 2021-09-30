@@ -7,7 +7,6 @@ import (
 
 	"github.com/labstack/echo/v4"
 
-	"encoding/json"
 	"io/ioutil"
 	"log"
 	"os"
