@@ -24,7 +24,8 @@ type H map[string]interface{}
 
 // Handlers
 func GetData(c echo.Context) error {
-	cid := c.QueryParam("cid")
+	// cid := c.QueryParam("cid")
+	cid := "abc"
 	// outdir := fmt.Sprintf("%v", cid)
 	// GetFileFromIPFS(cid, outdir)
 	// data, err := ioutil.ReadFile(outdir)
