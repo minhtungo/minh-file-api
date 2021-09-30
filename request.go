@@ -10,6 +10,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"log"
+	"os"
 )
 
 var keyString []byte = []byte("the-key-has-to-be-32-bytes-long!")
