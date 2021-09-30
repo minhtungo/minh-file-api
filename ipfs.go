@@ -9,13 +9,11 @@ import (
 )
 
 var sh *shell.Shell
-var url string = "localhost:8080"
+var url string = "localhost:8000"
 
-func init() {
-	sh = shell.NewShell(url)
-}
 
 func AddFileToIPFS(content string) string {
+	sh = shell.NewShell(url)
 	cid, err := sh.Add(strings.NewReader(content))
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "error: %s", err)
@@ -31,6 +29,7 @@ func AddFileToIPFS(content string) string {
 }
 
 func GetFileFromIPFS(cid string, outdir string) {
+	sh = shell.NewShell(url)
 	err := sh.Get(cid, outdir)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "error: %s", err)
