@@ -51,15 +51,15 @@ func AddData(c echo.Context) error {
 	}
 	content := fmt.Sprintf("%v", data["content"])
 	log.Fatalf(content)
-	encryptedString, err := Encrypt(content.Content, keyString)
-	if err != nil {
-		log.Fatalf("Failed encrypting the data%s\n", err)
-		return echo.NewHTTPError(http.StatusInternalServerError, err.Error)
-	}
-	cid := AddFileToIPFS(string(encryptedString))
+	// encryptedString, err := Encrypt(content.Content, keyString)
+	// if err != nil {
+	// 	log.Fatalf("Failed encrypting the data%s\n", err)
+	// 	return echo.NewHTTPError(http.StatusInternalServerError, err.Error)
+	// }
+	// cid := AddFileToIPFS(string(encryptedString))
 
-	log.Printf("Added data", cid)
-	return c.JSON(http.StatusOK, H{
-		"cid": cid,
-	})
+	// log.Printf("Added data", cid)
+	// return c.JSON(http.StatusOK, H{
+	// 	"cid": cid,
+	// })
 }
