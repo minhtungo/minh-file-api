@@ -14,9 +14,9 @@ import (
 
 var keyString []byte = []byte("the-key-has-to-be-32-bytes-long!")
 
-type Data struct {
-	Content string `json:"content"`
-}
+// type Data struct {
+// 	Content string `json:"content"`
+// }
 
 type H map[string]interface{}
 
@@ -43,13 +43,14 @@ func Hello(c echo.Context) error {
 }
 
 func AddData(c echo.Context) error {
-	content := new(Data)
-	err := c.Bind(&content)
+	data := make(map[string]interface{})
+	err := c.Bind(&data)
 	if err != nil {
 		log.Fatalf("Failed reading the request body %s\n", err)
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error)
 	}
-	log.Fatalf(content.String())
+	content := fmt.Sprintf("%v", data["content"])
+	fmt.Printf(content)
 	encryptedString, err := Encrypt(content.Content, keyString)
 	if err != nil {
 		log.Fatalf("Failed encrypting the data%s\n", err)
