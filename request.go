@@ -59,5 +59,5 @@ func AddData(c echo.Context) error {
 	// cid := AddFileToIPFS(string(encryptedString))
 
 	// log.Printf("Added data", cid)
-	return c.JSON(http.StatusOK, data)
+	return c.JSON(http.StatusOK, data.Content)
 }
