@@ -54,7 +54,9 @@ func AddData(c echo.Context) error {
 		log.Fatalf("Failed encrypting the data%s\n", err)
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error)
 	}
-	cid := AddFileToIPFS(string(encryptedString))
+
+	content := string(encryptedString)
+	cid := AddFileToIPFS(content)
 
 	log.Printf("Added data", cid)
 	return c.JSON(http.StatusOK, data)
