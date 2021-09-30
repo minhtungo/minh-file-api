@@ -44,15 +44,15 @@ func Hello(c echo.Context) error {
 }
 
 func AddData(c echo.Context) error {
-	var data Data
+	content := Data{}
 	defer c.Request().Body.Close()
-	err := json.NewDecoder(c.Request().Body).Decode(&data)
+	err := json.NewDecoder(c.Request().Body).Decode(&content)
 	if err != nil {
 		log.Fatalf("Failed reading the request body %s\n", err)
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error)
 	}
 
-	encryptedString, err := Encrypt(data.Content, keyString)
+	encryptedString, err := Encrypt(content.Content, keyString)
 	if err != nil {
 		log.Fatalf("Failed encrypting the data%s\n", err)
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error)
