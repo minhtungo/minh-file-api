@@ -14,9 +14,9 @@ import (
 
 var keyString []byte = []byte("the-key-has-to-be-32-bytes-long!")
 
-// type Data struct {
-// 	Content string `json:"content"`
-// }
+type Data struct {
+	Content string `json:"content"`
+}
 
 type H map[string]interface{}
 
@@ -43,7 +43,7 @@ func Hello(c echo.Context) error {
 }
 
 func AddData(c echo.Context) error {
-	data := make(map[string]interface{})
+	data := new(Data)
 	err := c.Bind(&data)
 	if err != nil {
 		log.Fatalf("Failed reading the request body %s\n", err)
