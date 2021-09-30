@@ -33,13 +33,13 @@ func GetData(c echo.Context) error {
 	// 	return echo.NewHTTPError(http.StatusInternalServerError, err.Error)
 	// }
 	return c.JSON(http.StatusOK, H{
-		"cid" : cid,
+		"cid": cid,
 	})
 }
 
 func Hello(c echo.Context) error {
 	return c.JSON(http.StatusOK, H{
-		"message": "Hellooo",
+		"message": "Hello",
 	})
 }
 
@@ -61,6 +61,6 @@ func AddData(c echo.Context) error {
 
 	log.Printf("Added data", cid)
 	return c.JSON(http.StatusOK, H{
-		"cid" : cid,
+		"cid": cid,
 	})
 }
