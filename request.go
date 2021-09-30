@@ -44,9 +44,8 @@ func Hello(c echo.Context) error {
 }
 
 func AddData(c echo.Context) error {
-	content := Data{}
-	defer c.Request().Body.Close()
-	err := json.NewDecoder(c.Request().Body).Decode(&content)
+	content := new(Data)
+	err := c.Bind(&content)
 	if err != nil {
 		log.Fatalf("Failed reading the request body %s\n", err)
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error)
