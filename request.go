@@ -60,6 +60,6 @@ func AddData(c echo.Context) error {
 
 	// log.Printf("Added data", cid)
 	return c.JSON(http.StatusOK, H{
-	 	"cid": data,
+	 	"cid": data["content"],
 	})
 }
