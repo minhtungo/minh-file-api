@@ -58,6 +58,6 @@ func AddData(c echo.Context) error {
 	content := string(encryptedString)
 	// cid := AddFileToIPFS(content)
 
-	log.Printf("Added data", cid)
+	//log.Printf("Added data", cid)
 	return c.JSON(http.StatusOK, content)
 }
