@@ -46,19 +46,19 @@ func Encrypt(stringToEncrypt string, key []byte) ([]byte, error) {
 	//Create a new Cipher Block from the key
 	block, err := aes.NewCipher(key)
 	if err != nil {
-		return nil, err
+		return nil, errors.New("1")
 	}
 
 	//Create a new GCM 
 	aesGCM, err := cipher.NewGCM(block)
 	if err != nil {
-		return nil, err
+		return nil, errors.New("2")
 	}
 
 	//Create a nonce. Nonce should be from GCM
 	nonce := make([]byte, aesGCM.NonceSize())
 	if _, err = io.ReadFull(rand.Reader, nonce); err != nil {
-		return nil, err
+		return nil, errors.New("3")
 	}
 
 	//Encrypt the data using aesGCM.Seal

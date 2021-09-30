@@ -49,9 +49,7 @@ func AddData(c echo.Context) error {
 		log.Fatalf("Failed reading the request body %s\n", err)
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error)
 	}
-	log.Fatalf("Here 1")
 	encryptedString, err := Encrypt(data.Content, keyString)
-	log.Fatalf("Here 2")
 	if err != nil {
 		log.Fatalf("Failed encrypting the data%s\n", err)
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error)
