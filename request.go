@@ -1,7 +1,7 @@
 package cryp
 
 import (
-	//"fmt"
+	"fmt"
 
 	"net/http"
 
@@ -27,7 +27,7 @@ func GetData(c echo.Context) error {
 	GetFileFromIPFS(cid, outdir)
 	data, err := ioutil.ReadFile(outdir)
 	if err != nil {
-		panic(err.Error())
+		fmt.Fprintf(os.Stderr, "error: %s", err)
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error)
 	}
 	return c.JSON(http.StatusOK, H{
